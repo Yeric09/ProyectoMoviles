@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.proyecto.parkfinder.db.DAO
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,6 +23,8 @@ class LoginActivity : AppCompatActivity() {
                 val intent = Intent(this, InicioActivity::class.java)
                 startActivity(intent)
             }
+
+            val db : DAO = DAO(this)
         }
 
         tvNuevoUsuario.setOnClickListener{

@@ -10,8 +10,11 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageButton
+import com.proyecto.parkfinder.db.DAO
+import com.proyecto.parkfinder.objetos.Usuario
 
 class RegistroUsuarioActivity : AppCompatActivity() {
 
@@ -25,11 +28,28 @@ class RegistroUsuarioActivity : AppCompatActivity() {
         val textoClave = findViewById<EditText>(R.id.registroTextoContrasena)
         val btnRegistrar = findViewById<Button>(R.id.registroBotonRegistrar)
         val btnImagen = findViewById<ImageButton>(R.id.registroBotonImagen)
-        viewImagen = findViewById<ImageView>(R.id.registroImagenPerfil)
+        val viewImagen = findViewById<ImageView>(R.id.registroImagenPerfil)
 
         btnImagen.setOnClickListener() {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             cambiarImagen.launch(intent)
+        }
+
+        btnRegistrar.setOnClickListener() {
+            val db = DAO(this)
+            val cv = Usuario(-1,
+                textoNombre.text.toString(),
+                textoCorreo.text.toString(),
+                textoClave.text.toString(),
+                viewImagen.toString().encodeToByteArray())
+
+            val llamada : Boolean = db.agregarUsuario(cv)
+
+            if (llamada) {
+                Toast.makeText(this, "Usuario agregado correctamente", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "Error agregando usuario", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
