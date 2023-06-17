@@ -2,9 +2,11 @@ package com.proyecto.parkfinder
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -30,11 +32,13 @@ class RegistroUsuarioActivity : AppCompatActivity() {
         val btnImagen = findViewById<ImageButton>(R.id.registroBotonImagen)
         val viewImagen = findViewById<ImageView>(R.id.registroImagenPerfil)
 
+        //Agrega una imagen del celular como foto de perfil
         btnImagen.setOnClickListener() {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI)
             cambiarImagen.launch(intent)
         }
 
+        //Agrega usuario nuevo a la base de datos.
         btnRegistrar.setOnClickListener() {
             val db = DAO(this)
             val cv = Usuario(-1,
@@ -50,6 +54,9 @@ class RegistroUsuarioActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(this, "Error agregando usuario", Toast.LENGTH_SHORT).show()
             }
+
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 

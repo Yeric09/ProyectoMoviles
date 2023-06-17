@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.proyecto.parkfinder.db.DAO
+import com.proyecto.parkfinder.objetos.Usuario
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +21,17 @@ class LoginActivity : AppCompatActivity() {
 
 
         btnIngresar.setOnClickListener{
-            if(etUsuario.text.toString().equals("Luis")  && etClave.text.toString().equals("123")) {
+            val db : DAO = DAO(this)
+            val usuarioObtenido : Usuario? = db.getUsuarioParaLogin(
+                etUsuario.text.toString(),
+                etClave.text.toString())
+
+            if (usuarioObtenido != null) {
                 val intent = Intent(this, InicioActivity::class.java)
                 startActivity(intent)
+            } else {
+                Toast.makeText(this, "Correo o Clave incorrectos", Toast.LENGTH_SHORT).show()
             }
-
-            val db : DAO = DAO(this)
         }
 
         tvNuevoUsuario.setOnClickListener{
