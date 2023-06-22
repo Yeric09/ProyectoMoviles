@@ -4,18 +4,127 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fadingEdge="horizontal|vertical|none"
     tools:context=".InicioActivity">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Aquí va el listado de categorias"
-        android:textSize="34sp"
+        android:id="@+id/BannerTxtView"
+        android:layout_width="402dp"
+        android:layout_height="57dp"
+        android:autoText="false"
+        android:background="#673AB7"
+        android:backgroundTint="#673AB7"
+        android:fontFamily="sans-serif-medium"
+        android:text="ParkFinder"
+        android:textAlignment="center"
+        android:textColor="#F3EEEE"
+        app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.444"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078" />
+        app:layout_constraintVertical_bias="0.008" />
+
+    <SearchView
+        android:id="@+id/btnSearch"
+        android:layout_width="35dp"
+        android:layout_height="34dp"
+        tools:layout_editor_absoluteX="349dp"
+        tools:layout_editor_absoluteY="19dp" />
+
+    <ImageButton
+        android:id="@+id/imageButtonTeatros"
+        android:layout_width="353dp"
+        android:layout_height="128dp"
+        android:fadingEdge="horizontal"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonMuseos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.534"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BannerTxtView"
+        app:layout_constraintVertical_bias="0.639"
+        app:srcCompat="@drawable/teatros" />
+
+    <ImageButton
+        android:id="@+id/imageButtonMuseos"
+        android:layout_width="353dp"
+        android:layout_height="155dp"
+        android:layout_marginBottom="36dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonParques"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.482"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/museo" />
+
+    <ImageButton
+        android:id="@+id/imageButtonParques"
+        android:layout_width="351dp"
+        android:layout_height="141dp"
+        android:layout_marginBottom="132dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/parques" />
+
+    <TextView
+        android:id="@+id/textView2Teatro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="43dp"
+        android:layout_marginBottom="40dp"
+        android:fontFamily="sans-serif"
+        android:text="Teatros"
+        android:textColor="#EDE9E9"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonTeatros"
+        app:layout_constraintEnd_toEndOf="@+id/imageButtonTeatros"
+        app:layout_constraintHorizontal_bias="0.439"
+        app:layout_constraintStart_toStartOf="@+id/imageButtonTeatros"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonTeatros"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView2Museo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="57dp"
+        android:layout_marginBottom="53dp"
+        android:fontFamily="sans-serif"
+        android:text="Museos"
+        android:textColor="#EDE9E9"
+        android:textSize="34sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButtonMuseos"
+        app:layout_constraintEnd_toEndOf="@+id/imageButtonMuseos"
+        app:layout_constraintHorizontal_bias="0.465"
+        app:layout_constraintStart_toStartOf="@+id/imageButtonMuseos"
+        app:layout_constraintTop_toTopOf="@+id/imageButtonMuseos"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView2Parque"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:fontFamily="sans-serif"
+        android:text="Parques"
+        android:textColor="#EDE9E9"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="@+id/imageButtonParques"
+        app:layout_constraintHorizontal_bias="0.462"
+        app:layout_constraintStart_toStartOf="@+id/imageButtonParques"
+        tools:layout_editor_absoluteY="512dp" />
+
+    <ImageButton
+        android:id="@+id/imageButtonMenu"
+        android:layout_width="30dp"
+        android:layout_height="34dp"
+        app:srcCompat="?attr/homeAsUpIndicator"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="19dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
