@@ -12,6 +12,12 @@
         android:theme="@style/Theme.ParkFinder"
         tools:targetApi="31">
         <activity
+            android:name=".RegistroComentario"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroAtraccionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ComentariosAtraccionActivity"
             android:exported="false" />
         <activity
