@@ -47,14 +47,58 @@ class DAO(context: Context?) : SQLiteOpenHelper(
             "CREATE TABLE $TABLA_COMENTARIO($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_ID_USUARIO INTEGER, $COL_ID_ATRACCION INTEGER, $COL_COMENTARIO TEXT, $COL_CANTIDAD_ESTRELLAS INTEGER, $COL_ICONO BLOB, FOREIGN KEY($COL_ID_USUARIO) REFERENCES $TABLA_USUARIO($COL_ID), FOREIGN KEY($COL_ID_ATRACCION) REFERENCES $TABLA_ATRACCION($COL_ID))"
 
 
+        val museo1: String =
+            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Jade', 'San Jose', 'Museos', 'Jade')"
+        val museo2: String =
+            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Oro', 'San Jose', 'Museos', 'Oro')"
+
         db?.execSQL(crearTabla)
         db?.execSQL(crearTablaAtraccion)
         db?.execSQL(crearTablaComentario)
     }
 
     //Se puede dejar en blanco
-    override fun onUpgrade(p0: SQLiteDatabase?, p1: Int, p2: Int) {
-        TODO("Not yet implemented")
+    override fun onUpgrade(db: SQLiteDatabase?, p1: Int, p2: Int) {
+        //Crea la tabla Usuarios en la base de datos
+        val crearTabla : String =
+            "CREATE TABLE $TABLA_USUARIO ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_NOMBRE TEXT, $COL_CORREO TEXT, $COL_CONTRASENA TEXT, $COL_ICONO BLOB)"
+
+        val crearTablaAtraccion: String =
+            "CREATE TABLE $TABLA_ATRACCION ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_NOMBRE TEXT, $COL_UBICACION TEXT, $COL_CATEGORIA TEXT, $COL_AMENIDADES TEXT, $COL_ICONO BLOB)"
+
+        val crearTablaComentario: String =
+            "CREATE TABLE $TABLA_COMENTARIO($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_ID_USUARIO INTEGER, $COL_ID_ATRACCION INTEGER, $COL_COMENTARIO TEXT, $COL_CANTIDAD_ESTRELLAS INTEGER, $COL_ICONO BLOB, FOREIGN KEY($COL_ID_USUARIO) REFERENCES $TABLA_USUARIO($COL_ID), FOREIGN KEY($COL_ID_ATRACCION) REFERENCES $TABLA_ATRACCION($COL_ID))"
+
+
+        val db : SQLiteDatabase = this.writableDatabase
+        val cv : ContentValues = ContentValues()
+        val cv2 : ContentValues = ContentValues()
+
+        cv.put(COL_NOMBRE, "Museo de Jade")
+        cv.put(COL_UBICACION, "San Jose")
+        cv.put(COL_CATEGORIA, "Museos")
+        cv.put(COL_AMENIDADES, "Jade")
+
+        cv2.put(COL_NOMBRE, "Museo de Oro")
+        cv2.put(COL_UBICACION, "San Jose")
+        cv2.put(COL_CATEGORIA, "Museos")
+        cv2.put(COL_AMENIDADES, "Oro")
+
+//        val museo1: String =
+//            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Jade', 'San Jose', 'Museos', 'Jade')"
+//        val museo2: String =
+//            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Oro', 'San Jose', 'Museos', 'Oro')"
+
+        db?.execSQL(crearTabla)
+        db?.execSQL(crearTablaAtraccion)
+        db?.execSQL(crearTablaComentario)
+
+        db.insert(TABLA_USUARIO, null, cv)
+        db.insert(TABLA_USUARIO, null, cv2)
+
+
+//        db?.insert(museo1)
+//        db?.execSQL(museo2)
     }
 
     // LOGICA USUARIO
@@ -132,7 +176,7 @@ class DAO(context: Context?) : SQLiteOpenHelper(
     }
 
     fun getAtracciones_X_Categoria(categoria: String): MutableList<Atraccion> {
-        val db : SQLiteDatabase = this.writableDatabase
+        val db : SQLiteDatabase = this.readableDatabase
         val query : String =
             "SELECT * FROM $TABLA_ATRACCION WHERE $COL_CATEGORIA = '$categoria'";
 
@@ -146,8 +190,8 @@ class DAO(context: Context?) : SQLiteOpenHelper(
                     val id = cursor.getInt(cursor.getInt(0))
                     val nombre = cursor.getString(1)
                     val ubicacion = cursor.getString(2)
-                    val amenidades = cursor.getString(3)
-                    val categoria = cursor.getString(4)
+                    val categoria = cursor.getString(3)
+                    val amenidades = cursor.getString(4)
                     val icono : ByteArray = cursor.getBlob(5)
                     val atraccion = Atraccion(id, nombre, ubicacion, categoria, amenidades.split("/").toTypedArray(), icono)
                     atracciones.add(atraccion)
@@ -231,5 +275,28 @@ class DAO(context: Context?) : SQLiteOpenHelper(
             cursor.close()
         }
         return comentarios
+    }
+
+    fun llenarTablaAtracciones() : Boolean {
+        val db : SQLiteDatabase = this.writableDatabase
+        val cv : ContentValues = ContentValues()
+        val cv2 : ContentValues = ContentValues()
+
+        cv.put(COL_NOMBRE, "Museo de Jade")
+        cv.put(COL_UBICACION, "San Jose")
+        cv.put(COL_CATEGORIA, "Museos")
+        cv.put(COL_AMENIDADES, "Jade")
+        cv.put(COL_ICONO, "test".encodeToByteArray())
+
+        cv2.put(COL_NOMBRE, "Museo de Oro")
+        cv2.put(COL_UBICACION, "San Jose")
+        cv2.put(COL_CATEGORIA, "Museos")
+        cv2.put(COL_AMENIDADES, "Oro")
+        cv2.put(COL_ICONO, "test".encodeToByteArray())
+
+        val insert = db?.insert(TABLA_ATRACCION, null, cv)
+        val insert2 = db?.insert(TABLA_ATRACCION, null, cv2)
+
+        return insert != -1L && insert2 != -1L
     }
 }

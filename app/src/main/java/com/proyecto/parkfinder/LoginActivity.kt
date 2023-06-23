@@ -28,7 +28,7 @@ class LoginActivity : AppCompatActivity() {
 
             if (usuarioObtenido != null) {
                 val intent = Intent(this, InicioActivity::class.java)
-                intent.putExtra("idUsuario", usuarioObtenido.id)
+                intent.putExtra("idUsuario", usuarioObtenido.id.toString())
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Correo o Clave incorrectos", Toast.LENGTH_SHORT).show()
