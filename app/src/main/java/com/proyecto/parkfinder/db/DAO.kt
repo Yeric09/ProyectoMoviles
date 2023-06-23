@@ -41,7 +41,7 @@ class DAO(context: Context?) : SQLiteOpenHelper(
             "CREATE TABLE $TABLA_USUARIO ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_NOMBRE TEXT, $COL_CORREO TEXT, $COL_CONTRASENA TEXT, $COL_ICONO BLOB)"
 
         val crearTablaAtraccion: String =
-            "CREATE TABLE $TABLA_ATRACCION ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_NOMBRE TEXT, $COL_UBICACION TEXT, $COL_CATEGORIA TEXT, $COL_AMENIDADES TEXT, $COL_ICONO BLOB)"
+            "CREATE TABLE $TABLA_ATRACCION ($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_NOMBRE TEXT, $COL_UBICACION TEXT, $COL_CATEGORIA TEXT, $COL_AMENIDADES TEXT)"
 
         val crearTablaComentario: String =
             "CREATE TABLE $TABLA_COMENTARIO($COL_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COL_ID_USUARIO INTEGER, $COL_ID_ATRACCION INTEGER, $COL_COMENTARIO TEXT, $COL_CANTIDAD_ESTRELLAS INTEGER, $COL_ICONO BLOB, FOREIGN KEY($COL_ID_USUARIO) REFERENCES $TABLA_USUARIO($COL_ID), FOREIGN KEY($COL_ID_ATRACCION) REFERENCES $TABLA_ATRACCION($COL_ID))"
@@ -84,10 +84,10 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         cv2.put(COL_CATEGORIA, "Museos")
         cv2.put(COL_AMENIDADES, "Oro")
 
-//        val museo1: String =
-//            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Jade', 'San Jose', 'Museos', 'Jade')"
-//        val museo2: String =
-//            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Oro', 'San Jose', 'Museos', 'Oro')"
+        val museo1: String =
+            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Jade', 'San Jose', 'Museos', 'Jade')"
+        val museo2: String =
+            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Oro', 'San Jose', 'Museos', 'Oro')"
 
         db?.execSQL(crearTabla)
         db?.execSQL(crearTablaAtraccion)
@@ -97,8 +97,8 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         db.insert(TABLA_USUARIO, null, cv2)
 
 
-//        db?.insert(museo1)
-//        db?.execSQL(museo2)
+        db?.execSQL(museo1)
+        db?.execSQL(museo2)
     }
 
     // LOGICA USUARIO
@@ -192,8 +192,7 @@ class DAO(context: Context?) : SQLiteOpenHelper(
                     val ubicacion = cursor.getString(2)
                     val categoria = cursor.getString(3)
                     val amenidades = cursor.getString(4)
-                    val icono : ByteArray = cursor.getBlob(5)
-                    val atraccion = Atraccion(id, nombre, ubicacion, categoria, amenidades.split("/").toTypedArray(), icono)
+                    val atraccion = Atraccion(id, nombre, ubicacion, categoria, amenidades.split("/").toTypedArray())
                     atracciones.add(atraccion)
                 } while (cursor.moveToNext())
             }
@@ -286,13 +285,11 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         cv.put(COL_UBICACION, "San Jose")
         cv.put(COL_CATEGORIA, "Museos")
         cv.put(COL_AMENIDADES, "Jade")
-        cv.put(COL_ICONO, "test".encodeToByteArray())
 
         cv2.put(COL_NOMBRE, "Museo de Oro")
         cv2.put(COL_UBICACION, "San Jose")
         cv2.put(COL_CATEGORIA, "Museos")
         cv2.put(COL_AMENIDADES, "Oro")
-        cv2.put(COL_ICONO, "test".encodeToByteArray())
 
         val insert = db?.insert(TABLA_ATRACCION, null, cv)
         val insert2 = db?.insert(TABLA_ATRACCION, null, cv2)
