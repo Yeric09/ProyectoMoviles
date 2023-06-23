@@ -95,6 +95,27 @@ class DAO(context: Context?) : SQLiteOpenHelper(
             return null
         }
     }
+    fun getUsuarioPorId(idUsuario: String): Usuario? {
+        val db : SQLiteDatabase = this.writableDatabase
+        val query : String =
+            "SELECT * FROM $TABLA_USUARIO WHERE $COL_ID = '$idUsuario'";
+
+//        val resultado : Array<String> = emptyArray()
+        val cursor : Cursor = db.rawQuery(query, null)
+
+        //Crear objeto usuario para retornar
+        if(cursor.moveToFirst()) {
+            val id : Int = cursor.getInt(0)
+            val nombre : String = cursor.getString(1)
+            val correo : String = cursor.getString(2)
+            val contrasena : String = cursor.getString(3)
+            val icono : ByteArray = cursor.getBlob(4)
+
+            return Usuario(id, nombre, correo, contrasena, icono)
+        } else {
+            return null
+        }
+    }
 
     // LOGICA ATRACCION
     fun agregarAtraccion(atraccion: Atraccion): Boolean{
@@ -138,6 +159,34 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         return atracciones
     }
 
+    fun getAtracciones_X_Id(idCategoria: String): MutableList<Atraccion> {
+        val db : SQLiteDatabase = this.writableDatabase
+        val query : String =
+            "SELECT * FROM $TABLA_ATRACCION WHERE $COL_ID_ATRACCION = '$idCategoria'";
+
+        val cursor : Cursor = db.rawQuery(query, null)
+
+        val atracciones: MutableList<Atraccion> = mutableListOf()
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getInt(cursor.getInt(0))
+                    val nombre = cursor.getString(1)
+                    val ubicacion = cursor.getString(2)
+                    val amenidades = cursor.getString(3)
+                    val categoria = cursor.getString(4)
+                    val icono : ByteArray = cursor.getBlob(5)
+                    val atraccion = Atraccion(id, nombre, ubicacion, categoria, amenidades.split("/").toTypedArray(), icono)
+                    atracciones.add(atraccion)
+                } while (cursor.moveToNext())
+            }
+        } finally {
+            cursor.close()
+        }
+        return atracciones
+    }
+
     // LOGICA COMENTARIO
 
     fun agregarComentario(comentario: Comentario): Boolean{
@@ -156,4 +205,31 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         return insert != -1L
     }
 
+    fun getComentario_X_Usuario(usuario: String): MutableList<Comentario> {
+        val db : SQLiteDatabase = this.writableDatabase
+        val query : String =
+            "SELECT * FROM $TABLA_COMENTARIO WHERE $COL_ID_USUARIO = '$usuario'";
+
+        val cursor : Cursor = db.rawQuery(query, null)
+
+        val comentarios: MutableList<Comentario> = mutableListOf()
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    val id = cursor.getInt(cursor.getInt(0))
+                    val usuario = getUsuarioPorId(cursor.getString(1))
+                    val atraccion =getAtracciones_X_Id(cursor.getString(2))
+                    val comentario = cursor.getString(cursor.getInt(3))
+                    val cantidadEstrellas = cursor.getInt(cursor.getInt(4))
+                    val foto = cursor.getBlob(5)
+                    val objetoComentario = Comentario(id, usuario as Usuario, atraccion as Atraccion, comentario, cantidadEstrellas, foto)
+                    comentarios.add(objetoComentario)
+                } while (cursor.moveToNext())
+            }
+        } finally {
+            cursor.close()
+        }
+        return comentarios
+    }
 }

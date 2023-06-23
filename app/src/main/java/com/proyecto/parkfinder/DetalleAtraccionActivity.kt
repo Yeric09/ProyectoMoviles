@@ -10,6 +10,17 @@ class DetalleAtraccionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detalle_atraccion)
 
+        val extras = intent.extras
+        var usuarioLogeado: String? = ""
+        //var idAtraccionActual: String? = ""
+        if (extras != null) {
+            usuarioLogeado = extras.getString("idUsuario")
+            //idAtraccionActual = extras.getString("idAtraccion)
+        }
+
+        intent.putExtra("idUsuario", usuarioLogeado)
+        //  FALTA PARAMETRO DE LA ATRACCION SELECCIONADA ASI:
+        //intent.putExtra("idAtraccion", atraccionSeleccionada)
         val redireccionar = findViewById<TextView>(R.id.textView4)
         redireccionar.setOnClickListener{
             val intent = Intent(this, ComentariosAtraccionActivity::class.java)
