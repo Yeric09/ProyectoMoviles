@@ -280,6 +280,9 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         val db : SQLiteDatabase = this.writableDatabase
         val cv : ContentValues = ContentValues()
         val cv2 : ContentValues = ContentValues()
+        val cv3 : ContentValues = ContentValues()
+        val cv4 : ContentValues = ContentValues()
+        val cv5 : ContentValues = ContentValues()
 
         cv.put(COL_NOMBRE, "Museo de Jade")
         cv.put(COL_UBICACION, "San Jose")
@@ -291,8 +294,26 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         cv2.put(COL_CATEGORIA, "Museos")
         cv2.put(COL_AMENIDADES, "Oro")
 
+        cv.put(COL_NOMBRE, "Teatro Nacional")
+        cv.put(COL_UBICACION, "San Jose")
+        cv.put(COL_CATEGORIA, "Teatros")
+        cv.put(COL_AMENIDADES, "Nacional")
+
+        cv2.put(COL_NOMBRE, "Parque Central")
+        cv2.put(COL_UBICACION, "San Jose")
+        cv2.put(COL_CATEGORIA, "Parques")
+        cv2.put(COL_AMENIDADES, "Parque")
+
+        cv.put(COL_NOMBRE, "Parque ABC")
+        cv.put(COL_UBICACION, "Heredia")
+        cv.put(COL_CATEGORIA, "Parques")
+        cv.put(COL_AMENIDADES, "Parque")
+
         val insert = db?.insert(TABLA_ATRACCION, null, cv)
         val insert2 = db?.insert(TABLA_ATRACCION, null, cv2)
+        val insert3 = db?.insert(TABLA_ATRACCION, null, cv3)
+        val insert4 = db?.insert(TABLA_ATRACCION, null, cv4)
+        val insert5= db?.insert(TABLA_ATRACCION, null, cv5)
 
         return insert != -1L && insert2 != -1L
     }
