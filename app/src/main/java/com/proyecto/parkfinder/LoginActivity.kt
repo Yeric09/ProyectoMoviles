@@ -22,6 +22,11 @@ class LoginActivity : AppCompatActivity() {
 
         btnIngresar.setOnClickListener{
             val db : DAO = DAO(this)
+           db.llenarTablaAtracciones()
+         //   db.eliminarAtraccion()
+
+
+
             val usuarioObtenido : Usuario? = db.getUsuarioParaLogin(
                 etUsuario.text.toString(),
                 etClave.text.toString())

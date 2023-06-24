@@ -38,17 +38,24 @@ class AtraccionesPorCategoriaActivity : AppCompatActivity() {
 
             if (categoriaActual != null) {
                 categoria.text = categoriaActual
-//                val atracciones: List<Atraccion> = db.getAtracciones_X_Categoria(categoriaActual)
-//
-//                val atraccionesArrayAdapter : ArrayAdapter<Atraccion> =
-//                    ArrayAdapter(this, android.R.layout.simple_list_item_1, atracciones)
-//                listaAtracciones.adapter = atraccionesArrayAdapter
+                val atracciones: List<Atraccion> = db.getAtracciones_X_Categoria(categoriaActual)
+
+              val atraccionesArrayAdapter : ArrayAdapter<Atraccion> =
+                  ArrayAdapter(this, android.R.layout.simple_list_item_1, atracciones)
+                   listaAtracciones.adapter = atraccionesArrayAdapter
+
+                atracciones.get(1).nombre.toString()
             }
+
+
+
+
+
         }
 
 
         intent.putExtra("idUsuario", usuarioLogeado)
-        //  FALTA PARAMETRO DE LA ATRACCION SELECCIONADA ASI:
+
         //intent.putExtra("idAtraccion", atraccionSeleccionada)
 //        val redireccionar = findViewById<TextView>(R.id.textView3)
 //        redireccionar.setOnClickListener{

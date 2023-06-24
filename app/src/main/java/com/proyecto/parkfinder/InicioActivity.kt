@@ -17,7 +17,7 @@ class InicioActivity : AppCompatActivity() {
         val btnTeatros = findViewById<ImageButton>(R.id.imageButtonTeatros)
         val btnParques = findViewById<ImageButton>(R.id.imageButtonParques)
         val nombreUsuario = findViewById<TextView>(R.id.nombreUsuario)
-        val btnMenuLat = findViewById<ImageButton>(R.id.imageButtonMenu)
+       // val btnMenuLat = findViewById<ImageButton>(R.id.imageButtonMenu)
 
         nombreUsuario.text = "Hola, usuario"
 

@@ -26,13 +26,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.008" />
 
-    <SearchView
-        android:id="@+id/btnSearch"
-        android:layout_width="35dp"
-        android:layout_height="34dp"
-        tools:layout_editor_absoluteX="349dp"
-        tools:layout_editor_absoluteY="19dp" />
-
     <ImageButton
         android:id="@+id/imageButtonParques"
         android:layout_width="351dp"
@@ -122,27 +115,18 @@
         app:layout_constraintTop_toTopOf="@+id/imageButtonTeatros"
         app:layout_constraintVertical_bias="0.0" />
 
-    <ImageButton
-        android:id="@+id/imageButtonMenu"
-        android:layout_width="30dp"
-        android:layout_height="34dp"
-        app:srcCompat="?attr/homeAsUpIndicator"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="19dp" />
-
     <TextView
         android:id="@+id/nombreUsuario"
-        android:layout_width="107dp"
-        android:layout_height="44dp"
-        android:layout_marginTop="69dp"
-        android:layout_marginBottom="628dp"
+        android:layout_width="74dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="76dp"
+        android:layout_marginBottom="32dp"
         android:text="Hola"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageButtonTeatros"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintHorizontal_bias="0.92"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/BannerTxtView"
         app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

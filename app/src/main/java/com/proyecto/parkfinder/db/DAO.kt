@@ -84,21 +84,21 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         cv2.put(COL_CATEGORIA, "Museos")
         cv2.put(COL_AMENIDADES, "Oro")
 
-//        val museo1: String =
-//            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Jade', 'San Jose', 'Museos', 'Jade')"
-//        val museo2: String =
-//            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Oro', 'San Jose', 'Museos', 'Oro')"
+       val museo1: String =
+            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Jade', 'San Jose', 'Museos', 'Jade')"
+        val museo2: String =
+            "INSERT INTO $TABLA_ATRACCION ($COL_NOMBRE, $COL_UBICACION, $COL_CATEGORIA, $COL_AMENIDADES) VALUES ('Museo de Oro', 'San Jose', 'Museos', 'Oro')"
 
         db?.execSQL(crearTabla)
         db?.execSQL(crearTablaAtraccion)
         db?.execSQL(crearTablaComentario)
 
-        db.insert(TABLA_USUARIO, null, cv)
-        db.insert(TABLA_USUARIO, null, cv2)
+      //  db.insert(TABLA_USUARIO, null, cv)
+      //  db.insert(TABLA_USUARIO, null, cv2)
 
 
-//        db?.insert(museo1)
-//        db?.execSQL(museo2)
+      //  db?.insert(museo1)
+       // db?.execSQL(museo2)
     }
 
     // LOGICA USUARIO
@@ -144,7 +144,7 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         val query : String =
             "SELECT * FROM $TABLA_USUARIO WHERE $COL_ID = '$idUsuario'";
 
-//        val resultado : Array<String> = emptyArray()
+        val resultado : Array<String> = emptyArray()
         val cursor : Cursor = db.rawQuery(query, null)
 
         //Crear objeto usuario para retornar
@@ -187,7 +187,7 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    val id = cursor.getInt(cursor.getInt(0))
+                    val id = cursor.getInt(cursor.getInt(1))
                     val nombre = cursor.getString(1)
                     val ubicacion = cursor.getString(2)
                     val categoria = cursor.getString(3)
@@ -215,7 +215,7 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         try {
             if (cursor.moveToFirst()) {
                 do {
-                    val id = cursor.getInt(cursor.getInt(0))
+                    val id = cursor.getInt(cursor.getInt(1))
                     val nombre = cursor.getString(1)
                     val ubicacion = cursor.getString(2)
                     val amenidades = cursor.getString(3)
@@ -281,12 +281,15 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         val db : SQLiteDatabase = this.writableDatabase
         val cv : ContentValues = ContentValues()
         val cv2 : ContentValues = ContentValues()
+        val cv3 : ContentValues = ContentValues()
 
-        cv.put(COL_NOMBRE, "Museo de Jade")
-        cv.put(COL_UBICACION, "San Jose")
-        cv.put(COL_CATEGORIA, "Museos")
-        cv.put(COL_AMENIDADES, "Jade")
+
+        cv.put(COL_NOMBRE, "Parque Guadalupe")
+        cv.put(COL_UBICACION, "Guadalupe")
+        cv.put(COL_CATEGORIA, "Parques")
+        cv.put(COL_AMENIDADES, "Musica en vivo/Naturaleza")
         cv.put(COL_ICONO, "test".encodeToByteArray())
+
 
         cv2.put(COL_NOMBRE, "Museo de Oro")
         cv2.put(COL_UBICACION, "San Jose")
@@ -294,9 +297,26 @@ class DAO(context: Context?) : SQLiteOpenHelper(
         cv2.put(COL_AMENIDADES, "Oro")
         cv2.put(COL_ICONO, "test".encodeToByteArray())
 
+
+        cv3.put(COL_NOMBRE, "Melico Salazar")
+        cv3.put(COL_UBICACION, "San Jose")
+        cv3.put(COL_CATEGORIA, "Teatros")
+        cv3.put(COL_AMENIDADES, "Obras de Teatro")
+        cv3.put(COL_ICONO, "test".encodeToByteArray())
+
         val insert = db?.insert(TABLA_ATRACCION, null, cv)
         val insert2 = db?.insert(TABLA_ATRACCION, null, cv2)
+        val insert3 = db?.insert(TABLA_ATRACCION, null, cv3)
 
         return insert != -1L && insert2 != -1L
+    }
+
+
+    fun eliminarAtraccion(){
+        val db : SQLiteDatabase = this.writableDatabase
+        val query : String =
+            "DELETE FROM $TABLA_ATRACCION"
+
+        db?.execSQL(query)
     }
 }
